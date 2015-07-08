@@ -1068,7 +1068,9 @@ define( [
                 textureMaterial.textureUnit = texCoordUnit = id;
             return texCoordUnit;
         },
-
+        getOrCreateProjectionMatrix: function () {
+            return this.getOrCreateUniform( 'mat4', 'ProjectionMatrix' );
+        },
         declareVertexTransformShadeless: function ( glPosition ) {
             // No light
             var tempViewSpace = this.createVariable( 'vec4' );
@@ -1083,7 +1085,7 @@ define( [
 
             //glpos
             this.getNode( 'MatrixMultPosition' ).inputs( {
-                matrix: this.getOrCreateUniform( 'mat4', 'ProjectionMatrix' ),
+                matrix: this.getOrCreateProjectionMatrix(),
                 vec: tempViewSpace
             } ).outputs( {
                 vec: glPosition
@@ -1109,8 +1111,8 @@ define( [
 
 
             //glpos
-            this.getNode( 'MatrixMultPosition' ).inputs( {
-                matrix: this.getOrCreateUniform( 'mat4', 'ProjectionMatrix' ),
+            factory.getNode( 'MatrixMultPosition' ).inputs( {
+                matrix: this.getOrCreateProjectionMatrix(),
                 vec: tempViewSpace
             } ).outputs( {
                 vec: glPosition
